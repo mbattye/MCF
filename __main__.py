@@ -8,7 +8,6 @@ from processing import list_indexes, list_subsections, get_average, get_variable
 
 if __name__=='__main__':
 
-    dir_path  = "./nbi/"
     # Define the list of variables to extract
     var_list = ['ne0','te0','taue','betap']
     # Run through the variables first
@@ -17,11 +16,11 @@ if __name__=='__main__':
         # Reinitiate an empty rows list to serve as CSV output for new variable
         rows = []
         # Directory for .mat files
-        dir_path = "./nbi/" # Set this up!
+        dir_path  = "./mats/nbi_only" # Set this up!
         # Loop though all the .mat files in directory
         for file in os.listdir(dir_path):
             print(f"Running processing for {file}")
-            full_dataset = scipy.io.loadmat(f"{dir_path}{file}")
+            full_dataset = scipy.io.loadmat(f"{os.path.join(dir_path,file)}")
 
             # list_subsections(full_dataset) # Uncomment to list subsections for matrix
             # list_indexes(full_dataset) # Uncomment to list indexes for matrix
@@ -41,5 +40,5 @@ if __name__=='__main__':
             # plt.show() # Uncomment to get plots
         # Output CSVs
         df = pd.DataFrame(rows)
-        output_filepath = f"./outputs/{var}_values" # Set this up!
+        output_filepath = f"./outputs/{var}_values.csv" # Set this up!
         df.to_csv(output_filepath, header=False, index=False)
